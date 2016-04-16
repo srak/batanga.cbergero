@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+#  config.vm.provision "shell", inline: "echo Hello"
+
+  config.vm.define "nginx" do |nginx|
+    nginx.vm.box = "debian/jessie64"
+    nginx.vm.hostname = "nginx.devops.com"
+    nginx.vm.network "private_network", ip: "10.127.0.10"
+    nginx.vm.provision :shell, path: "nginx.sh"
+  end
+
+  config.vm.define "php" do |php|
+    php.vm.box = "debian/jessie64"
+    php.vm.hostname = "php.devops.com"
+    php.vm.network "private_network", ip: "10.127.0.20"
+    php.vm.provision :shell, path: "php.sh"
+  end
+
+  config.vm.define "redis" do |redis|
+    redis.vm.box = "debian/jessie64"
+    redis.vm.hostname = "redis.devops.com"
+    redis.vm.network "private_network", ip: "10.127.0.30"
+    redis.vm.provision :shell, path: "redis.sh"
+  end
+
+end
