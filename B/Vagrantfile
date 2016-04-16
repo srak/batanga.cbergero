@@ -9,6 +9,12 @@ Vagrant.configure("2") do |config|
     nginx.vm.hostname = "nginx.devops.com"
     nginx.vm.network "private_network", ip: "10.127.0.10"
     nginx.vm.provision :shell, path: "nginx.sh"
+    nginx.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "512"] 
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
+
   end
 
   config.vm.define "php" do |php|
@@ -16,6 +22,11 @@ Vagrant.configure("2") do |config|
     php.vm.hostname = "php.devops.com"
     php.vm.network "private_network", ip: "10.127.0.20"
     php.vm.provision :shell, path: "php.sh"
+    php.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "1024"] 
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+    end
   end
 
   config.vm.define "redis" do |redis|
@@ -23,6 +34,11 @@ Vagrant.configure("2") do |config|
     redis.vm.hostname = "redis.devops.com"
     redis.vm.network "private_network", ip: "10.127.0.30"
     redis.vm.provision :shell, path: "redis.sh"
+    redis.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "256"] 
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+    end
   end
 
 end
